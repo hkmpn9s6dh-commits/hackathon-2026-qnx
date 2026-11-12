@@ -96,8 +96,11 @@ Key: `A=raycast B=linear C=paperclips D=stripe E=adarkroom F=ours G=vercel`
 
 | Judge | Ranking | Ours |
 |---|---|---|
+| glm5.3f (AME-1339) | A > G > B > **F** > D > E > C | 4 / 7, above 3 references — pass |
 | gpt-6.1-sol (AME-1338) | _pending_ | — |
-| glm5.3f (AME-1339) | _pending_ | — |
+
+Judge's words on ours: *"三欄分工清楚 … 紅/黃錯誤徽章與左邊框分級明確，單一綠色 CTA 點綴克制. 壓力只在小字號密集處（時間軸註釋、文件樹列表）略顯擁擠"* — density improved, not
+eliminated.
 
 ### Honest read of the gate
 
