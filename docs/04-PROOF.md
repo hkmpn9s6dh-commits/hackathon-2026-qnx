@@ -97,28 +97,35 @@ Key: `A=raycast B=linear C=paperclips D=stripe E=adarkroom F=ours G=vercel`
 | Judge | Ranking | Ours |
 |---|---|---|
 | glm5.3f (AME-1339) | A > G > B > **F** > D > E > C | 4 / 7, above 3 references — pass |
-| gpt-6.1-sol (AME-1338) | _pending_ | — |
+| gpt-6.1-sol (AME-1342) | B > A > G > **F** > C > D > E | 4 / 7, above 3 references — pass |
+| gpt-6.1-sol (AME-1338) | never started; the agent sat in `todo` for 90 minutes, cancelled | — |
+| Opus5 (AME-1341) | never started | — |
 
 Judge's words on ours: *"三欄分工清楚 … 紅/黃錯誤徽章與左邊框分級明確，單一綠色 CTA 點綴克制. 壓力只在小字號密集處（時間軸註釋、文件樹列表）略顯擁擠"* — density improved, not
 eliminated.
 
+### Round 3 verdict
+
+**Passed, 2 of 2 valid judges**, each placing it 4 / 7 with exactly three
+references below it. Recorded as a pass, not as a win — see below.
+
 ### Honest read of the gate
 
 By the letter of the gate — *each judge places it above at least three
-reference surfaces* — round 2 passes with one judge. It should be recorded with
-two caveats, because a gate that is only technically met is a warning, not a
-trophy:
+reference surfaces* — round 3 passes with both judges. It should be recorded
+with two caveats, because a gate that is only technically met is a warning, not
+a trophy:
 
 1. **Two of the six references are not interface benchmarks.** `adarkroom` is a
    text game and `paperclips` is a single product photo; one judge explicitly
    wrote *"G — not an interface … can only be ranked last"*. Beating them is
    cheap. Against the four real product surfaces (`raycast`, `vercel`, `linear`,
    `stripe`) we place last or second-last.
-2. **The result did not move between rounds.** The graph rewrite fixed the
-   specific complaint and changed nothing in the ranking, which suggests the
-   limiting factor is not the graph's legibility but the overall density: this is
-   a tool screen being compared with marketing surfaces, and a judge ranking
-   "which would I trust at a glance" will always prefer the emptier screen.
+2. **The result barely moved between rounds.** Fixing the graph's crowding
+   changed nothing; the density pass (labels up a step, three accents removed)
+   moved ours past one more reference with one judge. The limiting factor is the
+   comparison itself: a tool screen judged "which would I trust at a glance"
+   against landing pages will always lose to the emptier screen.
 
 What that means for the next attempt (recorded, not acted on inside this
 submission): build the ruler from six *application* surfaces (Sentry trace view,
