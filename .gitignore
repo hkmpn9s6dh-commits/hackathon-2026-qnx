@@ -6,3 +6,6 @@ dist-ssr
 proof/screenshots/*.tmp.png
 .tmp
 _ref
+video/raw/
+video/frames/
+proof/shots/_*.png
