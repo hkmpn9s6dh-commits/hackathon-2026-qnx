@@ -1,0 +1,64 @@
+# A buildfile that looks finished and boots to a dead console.
+# Every mistake here is one that costs an afternoon on a serial port.
+
+[image=0x400000]
+
+[virtual=aarch64le,elf +compress] boot = {
+    startup-rpi4 -v
+    PATH=/proc/boot
+    procnto-smp-instr
+}
+
+[+script] startup-script = {
+    display_msg Bring-up image r7
+
+    # Redirect the console first, then start the driver that owns it.
+    # Nothing is listening yet, so everything below prints into the void.
+    reopen /dev/ser1
+
+    SYSNAME=nto
+    TERM=qansi
+
+    pipe &
+    mqueue &
+    devc-pty &
+
+    devc-ser8250 -u1 0xfe201000^2,58 &
+    io-pkt-v6-hc -d virtio &
+    devb-sdmmc sdmmc ioport=0xfe340000 &
+    fs-qnx6 /dev/hd0 &
+
+    # A shell with no session: it dies as soon as the script finishes.
+    sh &
+
+    # This one never returns, so the script never reaches the end.
+    fs-nfs3 10.0.0.5:/exports /mnt/nfs
+
+    telemetry-agent --port /dev/ser2
+}
+
+[type=link] /tmp=/dev/shmem
+[type=link] /bin/sh=/proc/boot/ksh
+[type=link] /dev/console=/dev/ser1
+[type=link] /data=/var/data
+
+[perms=0666] /etc/telemetry.conf
+
+# Trimmed hard for size: only the binaries we thought we needed.
+libc.so
+libgcc_s.so.1
+
+echo
+cat
+ls
+pidin
+ksh
+pipe
+mqueue
+devc-pty
+devc-ser8250
+io-pkt-v6-hc
+devb-sdmmc
+fs-qnx6
+fs-nfs3
+telemetry-agent

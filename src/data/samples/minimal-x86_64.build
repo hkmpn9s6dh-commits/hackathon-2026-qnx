@@ -1,0 +1,49 @@
+# Minimal QNX OS 8.0 image for x86_64, modelled on the example in
+# "Building Embedded Systems" → Minimal configuration.
+# It boots, gives you a shell on the first serial port, and nothing else.
+
+[image=0x1400000]
+
+[virtual=x86_64,bios +compress] boot = {
+    # Use startup-x86 by default
+    startup-x86 -v
+    PATH=/proc/boot
+    LD_LIBRARY_PATH=/proc/boot
+    procnto-smp-instr
+}
+
+[+script] startup-script = {
+    display_msg Welcome to QNX OS 8.0 on x86_64
+
+    # These env variables get inherited by all programs which follow
+    SYSNAME=nto
+    TERM=qansi
+
+    devc-ser8250 &
+    waitfor /dev/ser1
+    reopen /dev/ser1
+
+    [+session] sh &
+}
+
+[type=link] /tmp=/dev/shmem
+[type=link] /bin/sh=/proc/boot/ksh
+
+# Shared libraries
+libc.so
+libgcc_s.so.1
+/usr/lib/ldqnx-64.so.2=ldqnx-64.so.2
+libm.so
+libz.so
+
+# General commands
+echo
+cp
+ls
+pidin
+cat
+ksh
+shutdown
+
+# Serial driver
+devc-ser8250
