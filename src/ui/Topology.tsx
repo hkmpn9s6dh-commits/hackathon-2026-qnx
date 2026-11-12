@@ -115,6 +115,7 @@ export function Topology({ replay, active, findings }: Props) {
                 stroke={stroke(s)}
                 strokeWidth={s === 'current' ? 2 : 1}
               />
+              {p.session ? <circle cx={x - chipW / 2 + 9} cy={chipTop + 9} r={2.6} fill="none" stroke="var(--mint)" strokeOpacity={0.7} /> : null}
               <text
                 x={x + chipW / 2 - 5}
                 y={chipTop + 11}
@@ -126,12 +127,8 @@ export function Topology({ replay, active, findings }: Props) {
               >
                 {p.line}
               </text>
-              <text x={x} y={chipTop + 24} textAnchor="middle" fontFamily="var(--mono)" fontSize="12" fill={label(s)}>
+              <text x={x} y={chipTop + 27} textAnchor="middle" fontFamily="var(--mono)" fontSize="12.5" fill={label(s)}>
                 {name}
-              </text>
-              <text x={x} y={chipTop + 36} textAnchor="middle" fontFamily="var(--mono)" fontSize="9.5" fill="var(--faint)">
-                {p.background ? 'background' : 'foreground'}
-                {p.session ? ' · session' : ''}
               </text>
 
               {p.provides.slice(0, 2).map((d, k) => (
@@ -141,9 +138,9 @@ export function Topology({ replay, active, findings }: Props) {
                   y={(above ? chipTop - 24 : chipTop + CHIP_H + 15) + k * 14}
                   textAnchor="middle"
                   fontFamily="var(--mono)"
-                  fontSize="10.5"
-                  fill={s === 'pending' ? 'var(--faint)' : 'var(--mint)'}
-                  opacity={s === 'pending' ? 0.6 : 0.95}
+                  fontSize="11"
+                  fill={s === 'alarm' ? 'var(--alarm)' : 'var(--dim)'}
+                  opacity={s === 'pending' ? 0.55 : 0.9}
                 >
                   {d}
                 </text>

@@ -69,9 +69,35 @@ line numbers inside the chips, dropped the console overlay.
 
 | Judge | Ranking | Ours |
 |---|---|---|
-| glm5.3f (AME-1337) | D > E > F > **B** > A > G > C | 4 / 7, above 3 references |
-| Fable5.1 (AME-1335) | _pending_ | — |
-| gpt-6.1-sol (AME-1336) | _pending_ | — |
+| glm5.3f (AME-1337) | D > E > F > **B** > A > G > C | 4 / 7, above 3 references — pass |
+| gpt-6.1-sol (AME-1336) | E > D > F > A > **B** > C > G | 5 / 7, above 2 references — **fail** |
+| Fable5.1 (AME-1335) | run failed: credential error, cancelled | — |
+
+gpt's reason: *"It is visually dense, with tiny labels, thin dividers, and many
+competing accents that make first-glance scanning less effortless."*
+
+**Round 2 verdict: not passed (one judge, one fail).** The gate requires every
+judge to place it above at least three references.
+
+### Round 3 — the approach changed, not the graph
+
+Both judges named the same cause, so the third pass attacked density rather than
+layout:
+
+- every micro label went up one step (9.5 → 10.5–11 px); the editor to 13.5 px
+  and a 23 px line height;
+- three competing elements were removed: the per-row line numbers in the contents
+  rail, the `background/foreground` sublabel inside each chip (a small ring now
+  marks `[+session]`), and the mint colour on device labels (they are `--dim`
+  until they are actually missing);
+- the step counter lost its mint border; rows and findings gained 2–3 px of air.
+
+Key: `A=raycast B=linear C=paperclips D=stripe E=adarkroom F=ours G=vercel`
+
+| Judge | Ranking | Ours |
+|---|---|---|
+| gpt-6.1-sol (AME-1338) | _pending_ | — |
+| glm5.3f (AME-1339) | _pending_ | — |
 
 ### Honest read of the gate
 

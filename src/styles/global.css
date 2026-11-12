@@ -22,7 +22,7 @@
   --findings: 392px;
   --bar: 56px;
   --status: 32px;
-  --row: 22px;
+  --row: 23px;
 }
 
 * {
@@ -187,7 +187,7 @@ button {
   border-right: 1px solid var(--line);
   background: var(--panel);
   overflow-y: auto;
-  padding: 12px 0 24px;
+  padding: 16px 0 28px;
 }
 
 .rail h2 {
@@ -204,8 +204,8 @@ button {
   display: flex;
   align-items: baseline;
   gap: 8px;
-  height: 26px;
-  padding: 0 14px;
+  height: 28px;
+  padding: 0 16px;
   font-family: var(--mono);
   font-size: 12px;
   color: var(--dim);
@@ -225,9 +225,7 @@ button {
 }
 
 .rail-item .ln {
-  margin-left: auto;
-  color: var(--faint);
-  font-size: 11px;
+  display: none;
 }
 
 .rail-item.pinned {
@@ -440,10 +438,10 @@ button {
   font-family: var(--mono);
   font-size: 12px;
   letter-spacing: 0.08em;
-  color: var(--mint);
-  border: 1px solid rgba(127, 227, 188, 0.3);
+  color: var(--dim);
+  border: 1px solid var(--line-strong);
   border-radius: 3px;
-  padding: 1px 8px;
+  padding: 1px 9px;
 }
 
 .topology {
@@ -533,9 +531,9 @@ button {
   background: transparent;
   color: var(--text);
   font-family: var(--mono);
-  font-size: 13px;
+  font-size: 13.5px;
   line-height: var(--row);
-  padding: 10px 20px 40px 12px;
+  padding: 12px 20px 40px 14px;
   tab-size: 4;
   white-space: pre;
   overflow: auto;
@@ -581,7 +579,7 @@ button {
   display: block;
   width: 100%;
   text-align: left;
-  padding: 10px 14px 12px;
+  padding: 13px 16px 14px;
   border-bottom: 1px solid var(--line);
   border-left: 2px solid transparent;
 }
