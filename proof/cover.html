@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <style>
+      * { box-sizing: border-box; margin: 0; }
+      html, body { width: 1500px; height: 1000px; }
+      body {
+        background: radial-gradient(120% 90% at 18% 0%, #10171b 0%, #07090b 58%, #05070a 100%);
+        color: #e6edf3;
+        font-family: 'Segoe UI Variable Display', 'Segoe UI', system-ui, sans-serif;
+        overflow: hidden;
+        position: relative;
+      }
+      .grid {
+        position: absolute; inset: 0;
+        background-image: linear-gradient(rgba(255,255,255,.035) 1px, transparent 1px),
+          linear-gradient(90deg, rgba(255,255,255,.035) 1px, transparent 1px);
+        background-size: 60px 60px;
+        mask-image: radial-gradient(80% 70% at 20% 10%, #000 20%, transparent 75%);
+      }
+      .inner { position: relative; padding: 86px 88px; height: 100%; display: flex; flex-direction: column; }
+      .mark {
+        font-family: ui-monospace, Consolas, monospace;
+        font-size: 17px; letter-spacing: .34em; color: #7fe3bc;
+        display: flex; align-items: center; gap: 14px;
+      }
+      .mark::before { content: ''; width: 9px; height: 9px; border-radius: 50%; background: #7fe3bc; box-shadow: 0 0 18px #7fe3bc; }
+      .tag {
+        margin-left: auto; font-family: ui-monospace, Consolas, monospace;
+        font-size: 15px; letter-spacing: .14em; color: #68737d;
+        border: 1px solid rgba(255,255,255,.14); border-radius: 4px; padding: 7px 13px;
+      }
+      h1 {
+        margin-top: 120px;
+        font-size: 92px; line-height: 1.02; letter-spacing: -0.035em; font-weight: 660;
+        max-width: 1180px;
+      }
+      h1 b { color: #7fe3bc; font-weight: 660; }
+      p.sub { margin-top: 30px; font-size: 30px; color: #9aa7b2; letter-spacing: -0.01em; }
+      .shot {
+        margin-top: auto;
+        height: 366px;
+        border: 1px solid rgba(255,255,255,.12);
+        border-radius: 6px 6px 0 0;
+        overflow: hidden;
+        box-shadow: 0 -20px 60px rgba(0,0,0,.5);
+        position: relative;
+      }
+      .shot img { width: 100%; display: block; margin-top: -56px; }
+      .shot::after {
+        content: '';
+        position: absolute; inset: 0;
+        background: linear-gradient(to bottom, transparent 62%, rgba(7,9,11,.86) 100%);
+      }
+    </style>
+  </head>
+  <body>
+    <div class="grid"></div>
+    <div class="inner">
+      <div class="mark">BOOTPRINT <span class="tag">QNX GLOBAL HACKATHON · DEVELOPER TOOLING</span></div>
+      <h1>Read the image <b>before</b> you flash it.</h1>
+      <p class="sub">A .build workbench for QNX bring-up: parse, replay the boot, fix the line that kills the console.</p>
+      <div class="shot"><img src="ours-1440.png" alt="" /></div>
+    </div>
+  </body>
+</html>

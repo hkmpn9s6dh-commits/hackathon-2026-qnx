@@ -15,9 +15,23 @@ function kindOf(entry: BuildEntry): { badge: string; pinned: boolean } {
   return { badge: '', pinned: false }
 }
 
+function groupOf(entry: BuildEntry): string {
+  if (!entry.target.startsWith('/')) return '/proc/boot'
+  const parts = entry.target.split('/').filter(Boolean)
+  return parts.length > 1 ? `/${parts[0]}` : '/'
+}
+
 export function ContentsRail({ entries, onGoto }: Props) {
   const pinned = entries.filter((e) => kindOf(e).pinned)
   const rest = entries.filter((e) => !kindOf(e).pinned)
+  const groups = new Map<string, BuildEntry[]>()
+  for (const e of rest) {
+    const key = groupOf(e)
+    const list = groups.get(key) ?? []
+    list.push(e)
+    groups.set(key, list)
+  }
+  const grouped = [...groups.entries()].sort((a, b) => b[1].length - a[1].length)
 
   return (
     <nav className="rail" aria-label="Image contents">
@@ -34,19 +48,27 @@ export function ContentsRail({ entries, onGoto }: Props) {
       })}
 
       <h2>Contents · {rest.length}</h2>
-      {rest.map((e) => {
-        const k = kindOf(e)
-        return (
-          <button key={e.index} className="rail-item" onClick={() => onGoto(e.line)}>
-            {k.badge ? <span className="badge">{k.badge}</span> : null}
-            <span className="name">
-              {e.target}
-              {e.renamed && e.source ? ` ← ${e.source}` : ''}
-            </span>
-            <span className="ln">{e.line}</span>
-          </button>
-        )
-      })}
+      {grouped.map(([dir, list]) => (
+        <div key={dir}>
+          <h3 className="rail-group">
+            {dir}
+            <span>{list.length}</span>
+          </h3>
+          {list.map((e) => {
+            const k = kindOf(e)
+            return (
+              <button key={e.index} className="rail-item" onClick={() => onGoto(e.line)}>
+                {k.badge ? <span className="badge">{k.badge}</span> : null}
+                <span className="name">
+                  {e.target}
+                  {e.renamed && e.source ? ` ← ${e.source}` : ''}
+                </span>
+                <span className="ln">{e.line}</span>
+              </button>
+            )
+          })}
+        </div>
+      ))}
     </nav>
   )
 }

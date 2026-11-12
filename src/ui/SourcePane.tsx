@@ -16,7 +16,13 @@ export function SourcePane({ text, onChange, activeLine, marks }: Props) {
   const [scrollTop, setScrollTop] = useState(0)
   const lines = text.split('\n')
 
+  // Only follow an *external* jump (a finding, the contents rail, the replay).
+  // Re-selecting on every keystroke would make typing replace the line the
+  // caret is on — which is exactly the bug this guard exists to prevent.
+  const followed = useRef(-1)
   useEffect(() => {
+    if (followed.current === activeLine) return
+    followed.current = activeLine
     const el = editor.current
     if (!el) return
     const target = Math.max(0, (activeLine - 1) * ROW - 80)
@@ -26,7 +32,7 @@ export function SourcePane({ text, onChange, activeLine, marks }: Props) {
     }
     const start = lines.slice(0, activeLine - 1).join('\n').length + (activeLine > 1 ? 1 : 0)
     el.setSelectionRange(start, start + (lines[activeLine - 1]?.length ?? 0))
-  }, [activeLine, lines, text])
+  }, [activeLine, lines])
 
   return (
     <div className="source">

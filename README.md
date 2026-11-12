@@ -8,6 +8,8 @@ Bootprint is a host tool for that afternoon. It parses the buildfile, resolves w
 
 **[Open it →](https://hkmpn9s6dh-commits.github.io/hackathon-2026-qnx/)** — no install, no account, no network. Everything runs in the page.
 
+![Bootprint on a buildfile that boots to a dead console](proof/shots/main.png)
+
 ---
 
 ## What it does
@@ -82,7 +84,7 @@ src/core/      parser, resolver, boot replay, rule engine   (pure TypeScript, no
 src/ui/        the five panes of the one screen
 src/data/      real and synthetic .build fixtures
 docs/          00-BRIEF · 01-SPEC (acceptance criteria) · 02-GRAMMAR · 04-PROOF · 07-UI
-scripts/       verify.sh · e2e.mjs · bench.mjs
+scripts/       verify.sh · e2e.mjs · bench.mjs · demo.mjs · deploy.sh
 proof/         screenshots, measurements, blind-ranking record
 ```
 

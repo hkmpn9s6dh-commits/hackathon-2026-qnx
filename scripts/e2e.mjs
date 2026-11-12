@@ -33,12 +33,12 @@ const check = (name, ok, extra = '') => {
 const browser = await chromium.launch({ executablePath: exe })
 const page = await browser.newPage({ viewport: { width: 1440, height: 900 }, deviceScaleFactor: 2 })
 
+const origin = new URL(url).origin
 const requests = []
 page.on('request', (r) => {
   const u = r.url()
-  if (!u.startsWith('http://127.0.0.1') && !u.startsWith('data:') && !u.startsWith('blob:')) {
-    requests.push(u)
-  }
+  if (u.startsWith('data:') || u.startsWith('blob:')) return
+  if (new URL(u).origin !== origin) requests.push(u)
 })
 
 await page.goto(url, { waitUntil: 'networkidle' })
@@ -81,6 +81,15 @@ await page.evaluate(() => {
 await page.waitForTimeout(250)
 const afterEdit = await page.locator('.pill.err b').innerText()
 check('fixing the loader drops one error', afterEdit === '2', `found ${afterEdit}`)
+
+// AC-13b: typing must insert, not replace the active line
+await page.locator('.editor').click()
+await page.keyboard.press('Control+End')
+const beforeLen = (await page.locator('.editor').inputValue()).length
+await page.keyboard.type('\n# typed by the e2e check')
+await page.waitForTimeout(200)
+const afterLen = (await page.locator('.editor').inputValue()).length
+check('typing appends instead of replacing', afterLen > beforeLen + 20, `${beforeLen} → ${afterLen}`)
 
 // screenshots
 await page.reload({ waitUntil: 'networkidle' })

@@ -169,12 +169,15 @@ export function analyze(build: Buildfile): Analysis {
   const arch = virtual.split(',')[0] ?? ''
 
   if (!vm || !vm.inline) {
+    const hasScript = build.entries.some((e) => attrLookup(e.attrs).has('script'))
     add({
       rule: 'no-boot-image',
-      severity: 'error',
+      severity: hasScript ? 'warning' : 'error',
       line: 1,
-      title: 'No boot image entry',
-      detail: 'Nothing in this file carries [virtual=…] with an inline boot script.',
+      title: hasScript ? 'No boot image entry in this file' : 'No boot image entry',
+      detail: hasScript
+        ? 'This file carries a startup script but no [virtual=…] block. Images are sometimes assembled from several buildfiles, so this may be one fragment — check the file that holds the boot block.'
+        : 'Nothing in this file carries [virtual=…] with an inline boot script.',
       fix: 'Add the boot entry, e.g. [virtual=x86_64,bios +compress] boot = { … }',
     })
   } else {
@@ -282,7 +285,7 @@ export function analyze(build: Buildfile): Analysis {
     })
   }
 
-  const is64 = /64$/.test(arch)
+  const is64 = /aarch64|x86_64|riscv64|_64|64$/.test(arch)
   if (hasLoader && arch) {
     const wants64 = is64
     const has32 = loaderNames.some((n) => /ldqnx\.so/.test(n))
